@@ -2,19 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import registerServiceWorker from './registerServiceWorker'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
-//import mySaga from './segas/sega'
-import {mySega} from './reducers/todos'
+//import {mySega} from './reducers/todos'
+import mySega from './segas/sega'
 import Root from './components/Root'
 
 const sagaMiddleware = createSagaMiddleware();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
 	rootReducer,
-	applyMiddleware(sagaMiddleware),
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+	composeEnhancers(applyMiddleware(sagaMiddleware))
 )
 
 sagaMiddleware.run(mySega)
